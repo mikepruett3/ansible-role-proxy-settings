@@ -12,4 +12,4 @@
     line: "proxy={{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}"
     insertafter: '^distroverpkg='
     state: present
-  when: file_exists.stat is defined and file_exists.stat.exists == false
+  when: file_exists.stat is defined and file_exists.stat.exists
