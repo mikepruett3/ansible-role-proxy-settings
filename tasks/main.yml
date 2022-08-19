@@ -3,4 +3,4 @@
 
 - name: "Include tasks from apt playbook"
   ansible.builtin.include_tasks: apt.yaml
-  when: ansible_facts['ansible_os_family'] == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
