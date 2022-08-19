@@ -1,2 +1,6 @@
 ---
 # defaults file for ansible-role-proxy-settings
+
+proxy_host: "myproxyserver.example.com"
+proxy_port: "3128"
+proxy_protocol: "http"

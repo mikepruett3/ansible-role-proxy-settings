@@ -1,0 +1,18 @@
+---
+# apt & apt-get tasks file for ansible-role-proxy-settings
+
+- name: "Test for existence /etc/apt/apt.conf.d/proxy.conf"
+  ansible.builtin.stat:
+    path: /etc/apt/apt.conf.d/proxy.conf
+  register: file_exists
+
+- name: "Configure Proxy Settings in /etc/apt/apt.conf.d/proxy.conf for apt-get"
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/proxy.conf
+    owner: root
+    group: root
+    mode: '0640'
+    content: |
+      Acquire::http::Proxy "{{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}";
+      Acquire::https::Proxy "{{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}";
+  when: file_exists.stat is defined and file_exists.stat.exists == false

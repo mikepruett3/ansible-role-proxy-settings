@@ -1,2 +1,6 @@
 ---
 # tasks file for ansible-role-proxy-settings
+
+- name: "Import apt playbook"
+  ansible.builtin.import_playbook: apt.yaml
+  when: ansible_facts['os_family'] == 'Debian'
