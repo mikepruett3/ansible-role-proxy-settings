@@ -1,0 +1,15 @@
+---
+# yum tasks file for ansible-role-proxy-settings
+
+- name: "Test for existence /etc/dnf/dnf.conf"
+  ansible.builtin.stat:
+    path: /etc/dnf/dnf.conf
+  register: file_exists
+
+- name: "Configure Proxy Settings in /etc/dnf/dnf.conf for dnf"
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: "proxy={{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}"
+    insertafter: '^best='
+    state: present
+  when: file_exists.stat is defined and file_exists.stat.exists
