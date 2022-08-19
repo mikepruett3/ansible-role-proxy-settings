@@ -1,0 +1,15 @@
+---
+# yum tasks file for ansible-role-proxy-settings
+
+- name: "Test for existence /etc/yum.conf"
+  ansible.builtin.stat:
+    path: /etc/yum.conf
+  register: file_exists
+
+- name: "Configure Proxy Settings in /etc/yum.conf for yum"
+  ansible.builtin.lineinfile:
+    path: /etc/yum.conf
+    line: "proxy={{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}"
+    insertafter: '^distroverpkg='
+    state: present
+  when: file_exists.stat is defined and file_exists.stat.exists == false
