@@ -1,0 +1,22 @@
+---
+# subscription-manager tasks file for ansible-role-proxy-settings
+
+- name: "Test for existence /etc/rhsm/rhsm.conf"
+  ansible.builtin.stat:
+    path: /etc/rhsm/rhsm.conf
+  register: file_exists
+
+- name: "Configure Proxy Settings in /etc/rhsm/rhsm.conf for subscription-manager"
+  ansible.builtin.lineinfile:
+    path: /etc/rhsm/rhsm.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    mode: '0644'
+    backup: yes
+  with_items:
+    - regexp: "^proxy_hostname ="
+      line: "proxy_hostname = {{ proxy_host }}"
+    - regexp: "^proxy_port ="
+      line: "proxy_port = {{ proxy_port }}"
+  when: file_exists.stat is defined and file_exists.stat.exists

@@ -5,6 +5,11 @@
   ansible.builtin.include_tasks: apt.yaml
   when: ansible_facts['os_family'] == 'Debian'
 
+- name: "Include tasks from subscription-manager playbook"
+  ansible.builtin.include_tasks: subscription-manager.yaml
+  when:
+    - ansible_facts['distribution'] == 'RedHat'
+
 - name: "Include tasks from yum playbook"
   ansible.builtin.include_tasks: yum.yaml
   when:
@@ -12,7 +17,7 @@
     - ansible_facts['distribution_major_version'] <= '7'
 
 - name: "Include tasks from dnf playbook"
-  ansible.builtin.include_tasks: yum.yaml
+  ansible.builtin.include_tasks: dnf.yaml
   when:
     - ansible_facts['os_family'] == 'RedHat'
     - ansible_facts['distribution_major_version'] >= '8'

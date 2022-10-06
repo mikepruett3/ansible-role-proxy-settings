@@ -1,5 +1,5 @@
 ---
-# yum tasks file for ansible-role-proxy-settings
+# dnf tasks file for ansible-role-proxy-settings
 
 - name: "Test for existence /etc/dnf/dnf.conf"
   ansible.builtin.stat:
