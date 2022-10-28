@@ -3,11 +3,13 @@
 
 - name: "Test Access to Proxy Server"
   ansible.builtin.uri:
-    #url: "{{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}"
-    url: "https://thisdoesnotwork.nope"
+    url: "{{ proxy_protocol }}://{{ proxy_host }}:{{ proxy_port }}"
     method: GET
     validate_certs: no
     status_code: [200, 400]
+
+- name: "Include tasks from env playbook"
+  ansible.builtin.include_tasks: env.yaml
 
 - name: "Include tasks from apt playbook"
   ansible.builtin.include_tasks: apt.yaml
