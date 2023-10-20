@@ -12,11 +12,13 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-    mode: '0644'
+    mode: '0640'
     backup: yes
   with_items:
     - regexp: "^proxy_hostname ="
       line: "proxy_hostname = {{ proxy_host }}"
     - regexp: "^proxy_port ="
       line: "proxy_port = {{ proxy_port }}"
-  when: file_exists.stat is defined and file_exists.stat.exists
+  when:
+    - file_exists.stat is defined
+    - file_exists.stat.exists
