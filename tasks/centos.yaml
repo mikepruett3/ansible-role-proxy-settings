@@ -1,0 +1,15 @@
+---
+# CentOS specific tasks file for ansible-role-proxy-settings
+
+# from https://serverfault.com/a/1161847
+- name: "Change Repository configs that are using mirror.centos.org to vault.centos.org"
+  ansible.builtin.shell:
+    cmd: sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo
+
+- name: "Change the baseurl protocol for any matching CentOS Repository configs"
+  ansible.builtin.shell:
+    cmd: sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo
+
+- name: "Disable the mirrorlist stanza for any matching CentOS Repository configs"
+  ansible.builtin.shell:
+    cmd: sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo

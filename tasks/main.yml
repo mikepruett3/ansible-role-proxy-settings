@@ -30,3 +30,9 @@
   ansible.builtin.include_tasks: dnf.yaml
   when:
     - ansible_facts['pkg_mgr'] == 'dnf'
+
+- name: "Include tasks from centos playbook"
+  ansible.builtin.include_tasks: centos.yaml
+  when:
+    - ansible_facts['distribution'] == 'CentOS'
+    - ansible_facts['distribution_major_version'] <= '7'
