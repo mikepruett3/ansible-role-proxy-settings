@@ -15,3 +15,13 @@
   when:
     - file_exists.stat is defined
     - file_exists.stat.exists
+
+- name: "Configure Timeout Settings in /etc/dnf/dnf.conf for dnf"
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: "timeout={{ timeout }}"
+    insertafter: '^proxy='
+    state: present
+  when:
+    - file_exists.stat is defined
+    - file_exists.stat.exists

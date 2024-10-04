@@ -18,3 +18,21 @@
   when:
     - file_exists.stat is defined
     - file_exists.stat.exists == false
+
+- name: "Test for existence /etc/apt/apt.conf.d/timeout.conf"
+  ansible.builtin.stat:
+    path: /etc/apt/apt.conf.d/timeout.conf
+  register: file_exists
+
+- name: "Configure Timeout Settings in /etc/apt/apt.conf.d/timeout.conf for apt-get"
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/timeout.conf
+    owner: root
+    group: root
+    mode: '0640'
+    content: |
+      Acquire::http::timeout "{{ timeout }}";
+      Acquire::https::timeout "{{ timeout }}";
+  when:
+    - file_exists.stat is defined
+    - file_exists.stat.exists == false

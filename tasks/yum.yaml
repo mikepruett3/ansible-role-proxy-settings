@@ -15,3 +15,12 @@
   when:
     - file_exists.stat is defined
     - file_exists.stat.exists
+
+- name: "Configure Timeout Settings in /etc/yum.conf for yum"
+  ansible.builtin.lineinfile:
+    path: /etc/yum.conf
+    line: "timeout={{ timeout }}"
+    insertafter: '^proxy='
+    state: present
+  when:
+    - file_exists.stat is defined
